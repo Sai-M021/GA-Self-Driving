@@ -1,5 +1,3 @@
-#Sai Manchikalapati
-# NOVEMBER 4, 2018 6 pm
 # Genetic Algorithm solution to the TSP, input values are:
 # - Amount of Cities
 # - Amount of Reproducing parents
