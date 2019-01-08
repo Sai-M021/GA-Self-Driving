@@ -1,49 +1,112 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class CarController : MonoBehaviour
 {
-    public WheelCollider[] wheels;
-    float enginePower = 150.0f;
-    public Rigidbody rb;
-    float power = 0.0f;
-    float brake = 0.0f;
-    float steer = 0.0f ;
-
-    float maxSteer = 25.0f;
-    // Use this for initialization
-    void Start()
+    public void GetInput()
     {
-
+        
+        
+        float[] temp = input.getValues();
+        m_nitro = temp[2]==1f;
+        m_verticalInput = temp[1];
+        m_horizontalInput = temp[0];
+        //Debug.Log(temp);
+        
     }
-    // Update is called once per frame
-    void FixedUpdate()
+    private void Steer()
     {
-        power = Input.GetAxis("Vertical") * enginePower * Time.deltaTime * 250.0f;
-        steer = Input.GetAxis("Horizontal") * maxSteer;
-        brake = Input.GetKey("space") ? rb.mass * 0.1f : 0.0f;
-        if (brake > 0.0f)
-        {
-            wheels[0].brakeTorque = brake;
-            wheels[1].brakeTorque = brake;
-            wheels[2].brakeTorque = brake;
-            wheels[3].brakeTorque = brake;
-            wheels[0].motorTorque = 0.0f;
-            wheels[2].motorTorque = 0.0f;
-        }
+        m_steeringAngle = MaxSteerAngle * m_horizontalInput;
+        WheelRF.steerAngle = m_steeringAngle;
+        WheelLF.steerAngle = m_steeringAngle;
+    }
+    private void Accelerate()
+    {
+        WheelRF.motorTorque = curMotorForce * m_verticalInput;
+        WheelLF.motorTorque = curMotorForce * m_verticalInput;
+    }
+    private void Brake()
+    {
+        WheelRF.brakeTorque = 2000.0f;
+        WheelLF.brakeTorque = 2000.0f;
+    }
+    private void releaseBrakes()
+    {
+        WheelRF.brakeTorque = 0.0f;
+        WheelLF.brakeTorque = 0.0f;
+    }
+    private void Nitro()
+    {
+        if(m_nitro)
+            curMotorForce = MotorForce * 2.5f;
         else
-        {
-            wheels[0].brakeTorque = 0.0f;
-            wheels[1].brakeTorque = 0.0f;
-            wheels[2].brakeTorque = 0.0f;
-            wheels[3].brakeTorque = 0.0f;
-            wheels[0].motorTorque = power;
-            wheels[2].motorTorque = power;
-        }
-        foreach (WheelCollider wheel in wheels)
-        {
-            wheel.transform.Rotate(new Vector3(steer, 0.0f,0.0f));
-        }
+            curMotorForce = MotorForce;
     }
+    private void UpdateWheelPoses()
+    {
+        UpdateWheelPose(WheelRF, TRF);
+        UpdateWheelPose(WheelLF, TLF);
+        UpdateWheelPose(WheelRB, TRB);
+        UpdateWheelPose(WheelLB, TLB);
+    }
+    private void UpdateWheelPose(WheelCollider _collider, Transform _transform)
+    {
+        Vector3 _pos = _transform.position;
+        Quaternion _quat = _transform.rotation;
+        _collider.GetWorldPose(out _pos, out _quat);
+        _transform.position = _pos;
+        _transform.rotation = _quat;
+    }
+    private void FixedUpdate()
+    {
+        GetInput();
+        Steer();
+        Nitro();
+        Accelerate();
+        /*if(m_brake == true)
+            Brake();
+        else
+            releaseBrakes();*/
+        UpdateWheelPoses();
+    }
+    private float m_horizontalInput;
+    private float m_verticalInput;
+    private float m_steeringAngle;
+    private bool m_nitro;
+    private bool m_brake;
+    //public gameObject driver;
+    public WheelCollider WheelRF, WheelLF;
+    public WheelCollider WheelRB, WheelLB;
+    public Transform TRF, TLF;
+    public Transform TRB, TLB;
+    public float MaxSteerAngle = 30;
+    public float MotorForce;
+    private float curMotorForce;
+    private getInput input;
+    public void Start()
+    {
+        curMotorForce = MotorForce;
+        input = gameObject.GetComponent<getInput>();
+        foreach(Renderer r in GetComponentsInChildren<Renderer>())
+        {
+            if (r.gameObject.name != "Cylinder001")
+            {
+                r.enabled = false;
+                //Debug.Log(r.gameObject.name);
+            }
+        }
+
+
+    }
+    /*public void Start()
+    {
+        Driver d = driver.GetComponent<Driver>();
+        m_horizontalInput = d.horizontal;
+        m_verticalInput = d.vertical;
+        m_nitro = d.nitro;
+        m_brake = d.brake;
+    }*/
+
 }
