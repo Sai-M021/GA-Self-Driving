@@ -1,4 +1,4 @@
 Collaborators: Sai M, Aneesh B, Ritvik J
 
 
-Notice: THE LIBRARY FOLDER FOR UNITY PROJECTS IS NOT UPLOADED DUE TO THE NUMBER OF FILES WITHIN THAT FOLDER, PLEASE HAVE A PROPER LIBRARY FOLDER IN YOUR OWN UNITY PROJECT
+Notice: Library folder too large, create local Unity library folder with prefabs.
