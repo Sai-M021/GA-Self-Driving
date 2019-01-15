@@ -7,8 +7,6 @@ public class CarController : MonoBehaviour
 {
     public void GetInput()
     {
-        
-        
         float[] temp = input.getValues();
         m_nitro = temp[2]==1f;
         m_verticalInput = temp[1];
@@ -59,17 +57,25 @@ public class CarController : MonoBehaviour
         _transform.position = _pos;
         _transform.rotation = _quat;
     }
+    private void fitnessH()
+    {
+        //fitness += Vector3.Distance(LastPos, transform.position);
+        //LastPos=transform.position;
+        fitness = Vector3.Distance(startPos,transform.position);
+    }
     private void FixedUpdate()
     {
-        GetInput();
-        Steer();
-        Nitro();
-        Accelerate();
-        /*if(m_brake == true)
-            Brake();
-        else
-            releaseBrakes();*/
-        UpdateWheelPoses();
+        if (!collided)
+        {
+            
+            GetInput();
+            Steer();
+            Nitro();
+            Accelerate();
+            UpdateWheelPoses();
+            fitnessH();
+        }
+        
     }
     private float m_horizontalInput;
     private float m_verticalInput;
@@ -85,28 +91,53 @@ public class CarController : MonoBehaviour
     public float MotorForce;
     private float curMotorForce;
     private getInput input;
+    public Boolean collided;
+
+    public float fitness;
+    private Vector3 startPos;
+    private Quaternion startRot;
+    
+    private Vector3 LastPos;
     public void Start()
     {
+        collided = false;
         curMotorForce = MotorForce;
         input = gameObject.GetComponent<getInput>();
-        foreach(Renderer r in GetComponentsInChildren<Renderer>())
+        setRender(false);
+        LastPos = transform.position;
+        startPos = transform.position;
+        startRot = transform.rotation;
+
+
+    }
+    public void setRender(Boolean b)
+    {
+        foreach (Renderer r in GetComponentsInChildren<Renderer>())
         {
             if (r.gameObject.name != "Cylinder001")
             {
-                r.enabled = false;
+                r.enabled = b;
                 //Debug.Log(r.gameObject.name);
             }
         }
 
-
     }
-    /*public void Start()
+
+    public void reset()
     {
-        Driver d = driver.GetComponent<Driver>();
-        m_horizontalInput = d.horizontal;
-        m_verticalInput = d.vertical;
-        m_nitro = d.nitro;
-        m_brake = d.brake;
-    }*/
+        transform.SetPositionAndRotation(startPos, startRot);
+        collided = false;
+    }
+    public void OnCollisionEnter(Collision c)
+    {
+        if(c.collider.gameObject.tag=="Wall")
+        {
+            collided = true;
+        }
+        Rigidbody rb = gameObject.GetComponent<Rigidbody>();
+        rb.velocity = new Vector3(0, 0, 0);
+        Debug.Log(fitness);
+    }
 
 }
+

@@ -7,26 +7,31 @@ public class NN
     private int hiddenLayerCount;
     private int hiddenLayerSize;
     private int inputSize = 5;
-    private float[,] weightsIH;
-    private float[,] weightsHE;
+    public float[,] weightsIH;
+    public float[,] weightsHE;
     private int outputSize = 2;
     public NN(int hiddenLayers, int hiddenNodes)
     {
         hiddenLayerCount = hiddenLayers;
         hiddenLayerSize = hiddenNodes;
-        weightsIH = new float[inputSize, hiddenSize];
-        weightsHE = new float[hiddenSize, outputSize];
-        weightsIH = randomizeWeights(weightsIH, inputSize, hiddenSize);
-        weightsHE = randomizeWeights(weightsHE, hiddenSize, outputSize);
+        weightsIH = new float[inputSize, hiddenLayerSize];
+        weightsHE = new float[hiddenLayerSize, outputSize];
+        weightsIH = randomizeWeights(weightsIH, inputSize, hiddenLayerSize);
+        weightsHE = randomizeWeights(weightsHE, hiddenLayerSize, outputSize);
     }
     public NN()
     {
-        hiddenCount = 1;
-        hiddenSize = 5;
-        weightsIH = new float[inputSize, hiddenSize];
-        weightsHE = new float[hiddenSize, outputSize];
-        weightsIH = randomizeWeights(weightsIH, inputSize, hiddenSize);
-        weightsHE = randomizeWeights(weightsHE, hiddenSize, outputSize);
+        hiddenLayerCount = 1;
+        hiddenLayerSize = 5;
+        weightsIH = new float[inputSize, hiddenLayerSize];
+        weightsHE = new float[hiddenLayerSize, outputSize];
+        weightsIH = randomizeWeights(weightsIH, inputSize, hiddenLayerSize);
+        weightsHE = randomizeWeights(weightsHE, hiddenLayerSize, outputSize);
+    }
+    public NN(float[,] IH, float[,] HE)
+    {
+        weightsIH = IH;
+        weightsHE = HE;
     }
     public float[,] randomizeWeights(float[,] matrix, int rows, int cols)
     {

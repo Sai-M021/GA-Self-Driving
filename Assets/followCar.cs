@@ -6,7 +6,9 @@ using UnityEngine;
 public class followCar : MonoBehaviour
 {
 
-    public GameObject car;       //Public variable to store a reference to the player game object
+    public GameObject car;
+    public int offZ;
+    public int offY;//Public variable to store a reference to the player game object
 
 
     private Vector3 offset;
@@ -16,14 +18,14 @@ public class followCar : MonoBehaviour
     void Start()
     {
         //Calculate and store the offset value by getting the distance between the player's position and camera's position.
-        offset = transform.position - car.transform.position;
-        transform.LookAt(car.transform);
+        offset = new Vector3(0, offY, offZ);
 
     }
 
     // LateUpdate is called after Update each frame
     void LateUpdate()
     {
+        
         // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
         transform.position = car.transform.position + offset.z*car.transform.forward+offset.y*car.transform.up;
         transform.LookAt(car.transform);
