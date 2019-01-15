@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 60436953}
   - component: {fileID: 60436952}
   m_Layer: 9
-  m_Name: Classic_16 1
+  m_Name: CarWithScripts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,6 +125,8 @@ MonoBehaviour:
   TLB: {fileID: 91667870}
   MaxSteerAngle: 30
   MotorForce: 100
+  collided: 0
+  fitness: 0
 --- !u!114 &60436952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +145,9 @@ MonoBehaviour:
   heightOffset: 0.15
   sideOffset: 0.2
   angleOffset: 35
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &91667869
 GameObject:
   m_ObjectHideFlags: 0
