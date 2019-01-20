@@ -4,34 +4,40 @@ using UnityEngine;
 using System;
 public class NN
 {
-    private int hiddenLayerCount;
-    private int hiddenLayerSize;
+    public int hiddenLayerCount;
+    public int hiddenLayerSize;
     private int inputSize = 5;
-    public float[,] weightsIH;
-    public float[,] weightsHE;
+    //public float[,] weightsIH;
+    //public float[,] weightsHE;
+    private float[][,] weights;
     private int outputSize = 2;
     public NN(int hiddenLayers, int hiddenNodes)
     {
         hiddenLayerCount = hiddenLayers;
         hiddenLayerSize = hiddenNodes;
-        weightsIH = new float[inputSize, hiddenLayerSize];
-        weightsHE = new float[hiddenLayerSize, outputSize];
-        weightsIH = randomizeWeights(weightsIH, inputSize, hiddenLayerSize);
-        weightsHE = randomizeWeights(weightsHE, hiddenLayerSize, outputSize);
+        weights = new float[hiddenLayerCount + 1][,];
+        weights[0] = new float[inputSize, hiddenLayerSize];
+        for(int i = 1; i < hiddenLayerCount; i++)
+        {
+            weights[i] = new float[hiddenLayerSize, hiddenLayerSize];
+        }
+        
+        weights[hiddenLayerCount] = new float[hiddenLayerSize, outputSize];
+
+        weights[0] = randomizeWeights(weights[0], inputSize, hiddenLayerSize);
+        for(int i = 1; i < hiddenLayerCount; i++)
+        {
+            weights[i] = randomizeWeights(weights[i], hiddenLayerSize, hiddenLayerSize);
+        }
+        weights[hiddenLayerCount] =
+        randomizeWeights(weights[hiddenLayerCount], hiddenLayerSize, outputSize);
     }
-    public NN()
+    public NN(float[][,] w, int hiddenLayers, int hiddenNodes)
     {
-        hiddenLayerCount = 1;
-        hiddenLayerSize = 5;
-        weightsIH = new float[inputSize, hiddenLayerSize];
-        weightsHE = new float[hiddenLayerSize, outputSize];
-        weightsIH = randomizeWeights(weightsIH, inputSize, hiddenLayerSize);
-        weightsHE = randomizeWeights(weightsHE, hiddenLayerSize, outputSize);
-    }
-    public NN(float[,] IH, float[,] HE)
-    {
-        weightsIH = IH;
-        weightsHE = HE;
+        hiddenLayerCount = hiddenLayers;
+        hiddenLayerSize = hiddenNodes;
+
+        weights = w;
     }
     public float[,] randomizeWeights(float[,] matrix, int rows, int cols)
     {
@@ -42,11 +48,15 @@ public class NN
     }
     public float[,] forward(float[,] input)
     {
-        float[,] Z1 = activation(multiply(input, weightsIH));
-        float[,] Z2 = activation(multiply(Z1, weightsHE));
-        return Z2;
+        float[,] Z;
+        Z = activation(multiply(input, weights[0]));
+        for(int i = 1; i < hiddenLayerCount + 1; i++)
+        {
+            Z = activation(multiply(Z, weights[i]));
+        }
+        return Z;
     }
-    public float[,] multiply(float[,] one, float[,] two)
+    public static float[,] multiply(float[,] one, float[,] two)
     {
         float[,] result = new float[one.GetLength(0), two.GetLength(1)];
         for (int i = 0; i < result.GetLength(0); i++)
@@ -69,30 +79,29 @@ public class NN
                 matrix[i, j] = (float) Math.Tanh(matrix[i, j]);
         return matrix;
     }
-    /*public float[,,] getAllWeights()
+    public float[][,] getAllWeights()
     {
-        return [weightsIH, weightsHe];
-    }*/
-    public float[,] getIHWeights()
+        return weights;
+    }
+    /*public float[,] getIHWeights()
     {
         return weightsIH;
     }
     public float[,] getHEWeights()
     {
         return weightsHE;
-    }
-    /*public void setAllWeights(float[,,] w)
-    {
-        weightsIH = w[];
-        weightsHE = w[]
     }*/
-    public void setIHWeights(float[,] w)
+    public void setAllWeights(float[][,] w)
+    {
+        weights = w;
+    }
+    /*public void setIHWeights(float[,] w)
     {
         weightsIH = w;
     }
     public void setHEWeights(float[,] w)
     {
         weightsHE = w;
-    }
+    }*/
 
 }
