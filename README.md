@@ -12,6 +12,6 @@ A  genetic algorithm (GA) was implemented in order to train the neural network. 
 The network that was implemented was a sequential neural network. Structurally, the neural network had two hidden layers each of size five, an input layer of size seven, and an output layer of size four. Figure 2 is an exact depiction of our neural network
 
 
-![Figure1](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/figure1.png?raw=true)
+![Figure1](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure1.png?raw=true)
 
 
