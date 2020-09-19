@@ -12,8 +12,18 @@ A  genetic algorithm (GA) was implemented in order to train the neural network. 
 The network that was implemented was a sequential neural network. Structurally, the neural network had two hidden layers each of size five, an input layer of size seven, and an output layer of size four. Figure 2 is an exact depiction of our neural network
 
 
-![Figure1](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure1.png?raw=true | width=100)
+![Figure1](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure1.png?raw=true)
 ![Figure2](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure2.png?raw=true)
 ![Figure3](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure3.png?raw=true)
+
+## Results
+
+Extensive statistics and data were collected on the effectiveness of our neural network as well as its efficiency and overall learning rate. Overall, the SDVs were able to be trained on seperate courses teaching it separate aspects of driving and were able to integrate those independent aspects when being tested in a relatively hard course. An important statistic that was collected was the completion of the courses as a function of the number of generations that ran. Specifically, this allows us to calculate the instantaneous learning rate simply by differentiating the the functions displayed. The appropriate approximation function and the corresponding derivative function are listed and plotted below. Figure 4 is the graph of percent completion of training courses against the amount of generations the GA trained for. 
+
+![Figure4](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure4.png?raw=true)
+
+Another important evaluation of the genetic algorithm involves changing the population size and determining its effect on the generations required until completion. A graph of this provides crucial information on how to optimize the algorithm’s parameters such that we can teach the SDVs using the least time and computational power. Figure 5 is the relationship between the population count and the generations required until mastery of the training courses was acquired.
+
+![Figure5](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure5.png?raw=true)
 
 
