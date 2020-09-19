@@ -26,4 +26,8 @@ Another important evaluation of the genetic algorithm involves changing the popu
 
 ![Figure5](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure5.png?raw=true)
 
+## Conclusion
+
+After training on multiple courses, each of which had disjoint aspects of driving, the SDVs were able to integrate what they learned while retaining important knowledge such as turning to successfully and completely navigate the testing course.
+
 
