@@ -11,9 +11,7 @@ Self driving vehicles (SDVs) will become increasingly important in the future as
 A  genetic algorithm (GA) was implemented in order to train the neural network. The specifics of the functionality of the GA is illustrated in Figure 1 which summarizes the actions which are conducted. The genetic algorithm produces an array of organisms which make up the population, which is  fed in by the user and is defaulted to 50. It then runs a digitized process of evolution for X  generations which is also determined by the user. Specifically, it simulates, ranks, breeds, and mutates the population until the user decides that the network has been trained sufficiently. The better an organism drives, the better its fitness is, making it more likely to breed and pass on favorable traits. Figure 3 details the specific mechanisms behind the GA.
 The network that was implemented was a sequential neural network. Structurally, the neural network had two hidden layers each of size five, an input layer of size seven, and an output layer of size four. Figure 2 is an exact depiction of our neural network
 
-![Figure 1](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/figure1.png)
-![Figure 2](figure2.png)
-![Figure 3](figure3.png)
 
+![Figure1](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/figure1.png?raw=true)
 
 
