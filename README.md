@@ -13,5 +13,7 @@ The network that was implemented was a sequential neural network. Structurally, 
 
 
 ![Figure1](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure1.png?raw=true)
+![Figure2](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure2.png?raw=true)
+![Figure3](https://github.com/Sai-M021/GA-Self-Driving-Vehicle/blob/master/Figure3.png?raw=true)
 
 
